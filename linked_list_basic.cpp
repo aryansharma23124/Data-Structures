@@ -3,6 +3,7 @@ using namespace std;
 
 struct Node{
 	int data;
+	char flag;
 	struct Node *next;
 
 };
@@ -330,6 +331,211 @@ int check_palindrome(Node *head){
 	}
 	return 1;
 
+
+}
+void removeDuplicates(struct Node* head) 
+{ 
+    /* Pointer to traverse the linked list */
+    struct Node* current = head; 
+  
+    /* Pointer to store the next pointer of a node to be deleted*/
+    struct Node* next_next;  
+    
+    /* do nothing if the list is empty */
+    if (current == NULL)  
+       return;  
+  
+    /* Traverse the list till last node */
+    while (current->next != NULL)  
+    { 
+       /* Compare current node with next node */
+       if (current->data == current->next->data)  
+       { 
+           /* The sequence of steps is important*/               
+           next_next = current->next->next; 
+           free(current->next); 
+           current->next = next_next;   
+       } 
+       else /* This is tricky: only advance if no deletion */
+       { 
+          current = current->next;  
+       } 
+    } 
+} 
+
+void remove_duplicates_unsorted(Node *head){
+	Node *temp=head,*temp1=head,*temp2=head,*temp3=head;
+	while(temp->next!=NULL){
+		temp2=temp;
+		while(temp2->next!=NULL){
+			if(temp->data==temp2->next->data){
+				//cout<<"A"<<temp2->data;
+				temp3=temp2->next;
+				//temp2=temp2->next;
+				temp2->next=temp2->next->next;
+				delete temp3;
+				//temp2=temp1;
+
+			}
+			else{
+				temp2=temp2->next;
+			}
+		}
+		if(temp->next==NULL){
+			temp->next=NULL;
+	}
+	else{
+		temp=temp->next;
+		//cout<<temp->data<<endl;
+	}
+	}
+}
+
+
+int remove_loop_linked_list(Node *head){
+	Node *temp=head,*temp2=head,*temp3=head,*temp4=head;
+	while(1){
+		temp=temp->next;temp=temp->next;
+		temp2=temp2->next;
+		if(temp==temp2){
+			break;
+		}
+	}
+	while(1){
+		temp3=temp2;
+		while(temp3->next!=temp2 and temp3->next!=temp4){
+			temp3=temp3->next;
+		}
+		if(temp3->next==temp4){
+			break;
+		}
+		temp4=temp4->next;
+	}
+	temp3->next=NULL;
+	
+	// while(temp3->next!=temp4){
+	// 	temp3=temp3->next;
+	// }
+	// temp3->next=NULL;
+
+}
+
+
+	// while(temp->next!=NULL){
+	// 	if(temp2!=temp){
+	// 		temp=temp->next;temp=temp->next;
+	// 		temp2=temp2->next;
+	// 	}
+	// 	else{
+	// 		temp3=temp2;
+	// 		while(temp3->next!=temp4){
+	// 			temp3=temp3->next;
+
+	// 		}
+	// 		temp3->next=NULL;
+	// 	}
+
+
+
+	// }
+
+
+
+int delete_both_duplicates(Node **head){
+	Node *temp1=*head,*temp2=*head,*temp3=*head,*temp4=*head,*temp5=*head,*temp6=*head,*temp7=*head,*temp8=*head;
+	while(temp1->next!=NULL){
+		temp2=temp1;
+		temp3=temp1;
+		int flag=0;
+		while(temp3->next!=NULL){
+			temp4=temp3->next;
+			if(temp4->data==temp2->data){
+				temp3->next=temp3->next->next;
+				flag=1;
+				free(temp4);
+				temp3=temp2;
+				//cout<<temp2->data;
+				//free(temp2);
+			}
+			else
+				temp3=temp3->next;
+			//cout<<"A";
+
+		}
+		if(flag==1){
+			// temp5=temp1;
+			// temp1=temp1->next;
+			// free(temp5);
+			// cout<<"A";
+			//temp1=temp2;
+			if(temp1!=*head and temp1->next!=NULL){
+				while(temp5->next!=temp1 and temp5->next!=NULL and temp1->next!=NULL){
+					//temp7=temp5;
+					temp5=temp5->next;
+				}
+
+			temp6=temp1;
+			temp5->next=temp1->next;
+			free(temp6);
+			temp1=temp1->next;
+			}
+			else if(temp1->next==NULL and temp1==*head){
+				*head=NULL;
+				free(temp1);
+				//ree(temp1);
+				break;
+			}
+			else if(temp1->next==NULL){
+				while(temp8->next!=temp1){
+					temp8=temp8->next;
+				}
+				temp8->next=NULL;
+				temp1=temp8;
+			}
+
+		else{
+			temp7=temp1;
+			*head=temp1->next;
+			//temp1=temp1->next;
+
+			//free(temp7);
+		}
+
+		}
+		else{
+			temp1=temp1->next;
+			}
+		//cout<<"A";
+	}
+}
+
+
+int merge_two_linked_list(Node **head,Node **head2){
+	Node *temp1=*head,*temp2=*head2;
+	while(temp1->next!=NULL){
+		temp1=temp1->next;
+	}
+	temp1->next=temp2;
+}
+
+int find_intersection_between_linked_list(Node *head,Node *head2){
+	Node *temp1=head,*temp2=head2;
+	while(temp1->next!=NULL){
+		temp1->flag='v';
+		temp1=temp1->next;
+	}
+	int data;
+	while(temp2->next!=NULL){
+		if(temp2->flag=='v'){
+			data=temp2->data;
+			break;
+		}
+		else{
+			temp2->flag='v';
+			temp2=temp2->next;
+		}
+	}
+	cout<<data<<endl;
 }
 
 int main(){
@@ -338,27 +544,45 @@ int main(){
 	Node *third=new Node;
 	Node *fourth=new Node;
 	Node *five=new Node;
+	Node *six=new Node;
+	Node *seven=new Node;
 	Node *final=new Node;
 	//Node *n_head=new Node;
 
 	head->data=1;
+	head->flag='a';
 	head->next=second;
 
-	second->data=2;
+	second->data=1;
+	second->flag='a';
 	second->next=third;
 
 
-	third->data=4;
+	third->data=2;
+	third->flag='a';
 	third->next=fourth;
 
 
-	fourth->data=3;
+	fourth->data=2;
+	fourth->flag='a';
 	fourth->next=five;
 
-	five->data=2;
-	five->next=final;
+	five->data=3;
+	five->flag='a';
+	five->next=six;
 
-	final->data=1;
+
+	six->data=3;
+	six->flag='a';
+	six->next=seven;
+
+
+	seven->data=6;
+	seven->flag='a';
+	seven->next=final;
+
+	final->data=6;
+	final->flag='a';
 	final->next=NULL;
 	//insert_after_given_node(second,7);
 	//insert_end(&head,8);
@@ -382,10 +606,17 @@ int main(){
 	//cout<<
 	//find_length_loop_linked_list(head);
 	//reverse_linked_list(&head);
-	reverse_linked_list_between_two_nodes(head,3,5);
+	//reverse_linked_list_between_two_nodes(head,3,5);
 	//cout<<check_palindrome(head);
 	//cout<<endl;
+	//removeDuplicates(head);
+	//remove_duplicates_unsorted(head);
+	//remove_loop_linked_list(head);
+	delete_both_duplicates(&head);
+	//merge_two_linked_list(&head,&five);
+	//find_intersection_between_linked_list(head,five);
 	printlist(head);
+	//cout<<final->data;
 	
 	//b = *a;
 	//printlist(head);
