@@ -215,16 +215,42 @@ void delete_last_node(Listnode **last){
 
 void swap_first_last_node(Listnode **last){
 	Listnode *temp=*last;Listnode *temp2=*last;
+	Listnode *head_pointer=temp->next;
 	Listnode *traversal_pointer =temp->next;
 	while(traversal_pointer->next!=temp){
 		traversal_pointer=traversal_pointer->next;
 	}
-	temp->next=traversal_pointer->next;
-	traversal_pointer->next=temp2->next;
+	temp->next=head_pointer->next;
+	head_pointer->next=traversal_pointer->next;
+	traversal_pointer->next=head_pointer;
+	temp=traversal_pointer->next;
 	//traversal_pointer=temp->next;
 	//*last=traversal_pointer->next;
 	printlist(temp);
 }
+
+// void exchange_first_last()
+// {
+// 	if(last==NULL||last->next==last)
+// 		return;
+// 	node *temp=last->next;
+// 	node *head=last->next;
+// 	if(temp->next==last)
+// 		last=last->next;
+// 	else
+// 	{
+// 		node *pre=last;
+// 		while(temp!=last)
+// 		{
+// 			pre=pre->next;
+// 			temp=temp->next;
+// 		}
+// 		last->next=head->next;
+// 		head->next=pre->next;
+// 		pre->next=head;
+// 		last=pre->next;
+// 	}
+// }
 
 
 int main(){
