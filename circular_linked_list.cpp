@@ -253,6 +253,53 @@ void swap_first_last_node(Listnode **last){
 // }
 
 
+
+int josephus_circle(int m,int n){
+
+
+	//creating a circular Linked List with integers till n
+	Listnode *head=new Listnode;
+	head->data=1;
+	Listnode *temp=head;
+	for(int i=1;i<m;i++){
+		Listnode *new_node=new Listnode;
+		new_node->data=i+1;
+		new_node->next=new_node;
+		temp->next=new_node;
+		temp=temp->next;
+	}
+	temp->next=head;	
+	temp=head;
+
+	//cout<<temp->next->data<<endl;
+	//printlist_head(head);
+	int counter=0;
+	int nodes_deleted=0;
+	Listnode *prev=temp;
+
+	while(1){
+		counter=0;
+		while(counter<n-1){
+			prev=temp;
+			temp=temp->next;
+			counter++;
+		}
+		
+		//cout<<temp->data;
+		prev->next=temp->next;
+		free(temp);
+		
+		nodes_deleted++;
+		if(nodes_deleted==m-1){
+			return prev->data;
+		}
+		temp=prev->next;
+	}
+
+
+	return 0;
+}
+
 int main(){
 	Listnode *last =new Listnode;
 	last=NULL;
@@ -269,19 +316,20 @@ int main(){
 	// insert_data(&head,4);
 
 	// insert_data(&head,5);
-	insert_in_an_emptylist_lnode(&last,4);
-	inserting_a_node_begining_using_lnode(last,3);
-	insert_node_end_using_lastnode(&last,6);
-	//cout<<last->data;
+	// insert_in_an_emptylist_lnode(&last,4);
+	// inserting_a_node_begining_using_lnode(last,3);
+	// insert_node_end_using_lastnode(&last,6);
+	// //cout<<last->data;
 
-	//insert_between_two_nodes(&last,7,3);
-	insert_between_two_nodes(&last,9,6);
-	//split_circular_list_two_halves(last,&linked_list1,&linked_list2);
-	//insert_node_in_sorted_circular_linkedlist(last,11);
+	// //insert_between_two_nodes(&last,7,3);
+	// insert_between_two_nodes(&last,9,6);
+	// //split_circular_list_two_halves(last,&linked_list1,&linked_list2);
+	// //insert_node_in_sorted_circular_linkedlist(last,11);
 
-	//delete_begin(&last);
-	//delete_last_node(&last);
-	swap_first_last_node(&last);
+	// //delete_begin(&last);
+	// //delete_last_node(&last);
+	// swap_first_last_node(&last);
+	cout<<josephus_circle(14,2);
 
 
 	//cout<<last->data;
